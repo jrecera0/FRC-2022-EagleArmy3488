@@ -7,10 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
+/**
+ * SetToExtendSpeedCmd class that sets the climber speed for extending them upwards
+ */
 public class SetToExtendSpeedCmd extends CommandBase {
   private final Climber climber;
 
-  /** Creates a new SetToExtendSpeedCmd. */
+  /**
+   * Creates a new SetToExtendSpeedCmd.
+   * @param climber Climber to set the speed of
+   */
   public SetToExtendSpeedCmd(Climber climber) {
     this.climber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -18,6 +24,10 @@ public class SetToExtendSpeedCmd extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * Simply sets the climber to its extending speed as specified in {@link Climber} within
+   * the {@code setToClimb()} method
+   */
   @Override
   public void initialize() {
     climber.setToExtend();
@@ -35,6 +45,10 @@ public class SetToExtendSpeedCmd extends CommandBase {
   }
 
   // Returns true when the command should end.
+  /**
+   * This is set to true so as to immediately finish the command once scheduled, as the task only
+   * needs to be run once in {@code initialize()}
+   */
   @Override
   public boolean isFinished() {
     return true;

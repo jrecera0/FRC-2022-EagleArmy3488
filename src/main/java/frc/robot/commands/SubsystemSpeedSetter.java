@@ -14,6 +14,27 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Pickup;
 import frc.robot.subsystems.Shooter;
 
+/**
+ * SubsystemSpeedSetting class that allows for us to manually set the speeds of each
+ * individual subsystem on the fly. The writing of this was definitely a little bit more
+ * involved and definitely needs some improvements, but the functionality of it is as follows...
+ * 
+ * <p> Manually passing in all subsystems (should probably find a way to just pass these in automatically
+ * rather than having to add a new subsystem every time a new mechanism gets added in code) and
+ * the Xbox controller (this is definitely the incorrect way of doing things according to the command-based
+ * paradigm, we should actually be binding the button presses by hand in {@link frc.robot.RobotContainer}
+ * rather than polling them in here), we track the current and previous button presses of the D-Pad
+ * from the controller, and using that we are able to increase or decrease the current speed (Up or Down)
+ * and cycle through all the subsystems according to a hardcoded enum with a list of all the subsystems,
+ * and hard-linking them to a certain index of a list (Left and Right cycles these subsystems).
+ * The biggest issue is that this is really a custom class in that everything is pretty much hard-coded
+ * and likely can't be reused for the future unless for whatever reason the subsystems and functionality
+ * remains largely the same, so I do recommend that a rewrite of this be done so that it isn't
+ * subsystem specific and can be applied to whatever robot is being used in the future, because it
+ * is VERY handy having a class like this availble to tweak on the fly, its just that this specific
+ * one was not designed with future robustness in mind. The principles will remain, but the code
+ * itself is likely to break with changing requirements over time.
+ */
 public class SubsystemSpeedSetter extends CommandBase {
   // State management for the speed setting
   private enum State {
@@ -46,7 +67,14 @@ public class SubsystemSpeedSetter extends CommandBase {
   private int stateIdx = 2;
   private double speed = 0;
 
-  /** Creates a new CustomSpeedMgmtCmd. */
+  /**
+   * Creates a new CustomSpeedMgmtCmd.
+   * @param indexer Indexer to manage the speed of
+   * @param pickup Pickup to manage the speed of
+   * @param shooter Shooter to manage the speed of (there's custom speed management for this as the -1.0 to 1.0 is not in use)
+   * @param climber Climber to manage the speed of
+   * @param xbox XboxController to use to poll for button presses
+   */
   public SubsystemSpeedSetter(Indexer indexer, Pickup pickup, Shooter shooter, Climber climber, XboxController xbox) {
     // Setting up subsystems
     this.indexer = indexer;
@@ -68,6 +96,25 @@ public class SubsystemSpeedSetter extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * I will now attempt to explain what half of this code does, it's mainly just a lot of if-statements
+   * and then cycling through the different subsystems.
+   * 
+   * <p> First, we poll for button presses from the D-Pad, seeing if we've pressed "left" or "right". Depending
+   * on the button press and where we are according to the list of subsystems we are cycling through, we either increment,
+   * decrement, or jump to a certain index of the list so we can establish subsystem we are adjusting the speed of.
+   * 
+   * <p> We apply the speed then to the specifc subsystem, making sure to grab the current speed of each subsystem
+   * first before changing them from here. Speed adjustments are done via the "up" or "down" buttons of the D-Pad,
+   * and have different behavior depending on if you are adjusting normal subsystems or the shooter, as the shooter
+   * has a very different scaling in speed versus the default -1.0 to 1.0 power set up for all other subsystems.
+   * There is also a custom toggle to go straight to the climber by pressing on the right joystick, but this was never
+   * used in competition as we were already able to climb very quickly with our configuration.
+   * 
+   * <p> As mentioned before, there is definitely a better way to write all this, so I do recommend a rewrite
+   * of this class for the future for robustness and for lessened complexity than this mess of if-statements
+   * to manage each individual subsystem.
+   */
   @Override
   public void execute() {
     // Polling button press for change in state

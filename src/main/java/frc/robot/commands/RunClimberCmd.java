@@ -7,10 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
+/**
+ * RunClimberCmd class that runs the climber according to its current specified speed within
+ * {@link frc.robot.subsystems.Climber}
+ */
 public class RunClimberCmd extends CommandBase {
   private final Climber climber;
 
-  /** Creates a new RunClimberCmd. */
+  /**
+   * Creates a new RunClimberCmd.
+   * @param climber Climber that is being used to either extend or climb
+   */
   public RunClimberCmd(Climber climber) {
     this.climber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,12 +31,18 @@ public class RunClimberCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Simply executes the {@code run()} function found in {@link Climber}
+   */
   @Override
   public void execute() {
     climber.run();
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Immediately stops the climber once unscheduled or interrupted
+   */
   @Override
   public void end(boolean interrupted) {
     climber.stop();

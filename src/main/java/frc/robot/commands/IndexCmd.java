@@ -7,9 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
+/**
+ * IndexCmd class that allows for power cells to be indexed and moved from the pickup
+ * to the shooter.
+ */
 public class IndexCmd extends CommandBase {
   private final Indexer indexer;
-  /** Creates a new IndexCmd. */
+  /**
+   * Creates a new IndexCmd.
+   * @param indexer Indexer that will roll the power cells to the shooter
+   */
   public IndexCmd(Indexer indexer) {
     this.indexer = indexer;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -23,12 +30,19 @@ public class IndexCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * When scheduled, the indexer will be told to indexer via the {@code index()} method
+   * until told to stop
+   */
   @Override
   public void execute() {
     indexer.index();
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Immediately stops the indexer once unscheduled or interrupted
+   */
   @Override
   public void end(boolean interrupted) {
     indexer.stop();

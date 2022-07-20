@@ -7,9 +7,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
+/**
+ * SetHighGoalCmd class that sets the shooter to its "High Goal" speed and threshold
+ */
 public class SetHighGoalCmd extends CommandBase {
   private final Shooter shooter;
-  /** Creates a new SetHighGoalCmd. */
+  /**
+   * Creates a new SetHighGoalCmd.
+   * @param shooter Shooter to set the speeds and thresholds of
+   */
   public SetHighGoalCmd(Shooter shooter) {
     this.shooter = shooter;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -17,6 +23,10 @@ public class SetHighGoalCmd extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * When scheduled, the init function will run once to run the {@code setToHighGoal()}
+   * method found within {@link Shooter}
+   */
   @Override
   public void initialize() {
     shooter.setToHighGoal();
@@ -33,7 +43,10 @@ public class SetHighGoalCmd extends CommandBase {
     // System.out.println(this.toString() + " ended!");
   }
 
-  // Returns true when the command should end.
+  /**
+   * This is set to true so as to immediately finish the command once scheduled, as the task only
+   * needs to be run once in {@code intialize()}
+   */
   @Override
   public boolean isFinished() {
     return true;

@@ -16,16 +16,22 @@ import edu.wpi.first.wpilibj.Filesystem;
 
 /**
  * A custom class to load trajectories that are put at the root of the
- * deploy directory. To a certain degree, this is somewhat cursed because
- * loops are a bit of a controversial and iffy thing to use for frc code,
- * but for the sake of being able to load many files on robot code start,
- * this should be appropriate.
- **/
+ * {@code deploy} directory. To a certain degree, this is somewhat cursed because
+ * loops are a bit of a controversial thing to use within frc code. However, for this specific
+ * use case of loading many files on robot code start, this should be appropriate.
+ */
 public class TrajectoryLoader {
-    // Create dictionary map for trajectories and their names
+    /**
+     * Directary map for each loaded trajectory object and their name as a string. HashMap
+     * is {@link String}, {@link Trajectory}.
+     */
     private Map<String, Trajectory> trajectories = new HashMap<String, Trajectory>();
 
-    // Attempt to load all trajectories in the root deploy folder
+    /**
+     * Load all trajectories in the deploy folder, looping for each file in the folder
+     * and saving each one to the dictionary if successfully loaded. Errors are
+     * reported to the Driver Station console.
+     */
     public TrajectoryLoader() {
         String[] trajectoryFilepathStrings = Filesystem.getDeployDirectory().list();
         for (int i = 0; i < trajectoryFilepathStrings.length; i++) {
@@ -39,12 +45,21 @@ public class TrajectoryLoader {
         }
     }
 
-    // Getter for trajectories by their filename
+    /**
+     * Getter for trajectories by their filename
+     * @param trajectoryName The name of the trajectory
+     * @return {@link Trajectory} that was requested, unless said trajectory was not found in the dictionary
+     */
     public Trajectory getTrajectory(String trajectoryName) {
         return trajectories.get(trajectoryName);
     }
 
-    // If we need to string trajectories together, we do it here...
+    /**
+     * Method for stringing trajectories together back to back into a single parent trajectory.
+     * The first trajectory passed into the method becomes the parent trajectory that will be
+     * altered DIRECTLY in the dictionary, so use with caution.
+     * @param trajectoryNames Name of each trajectory to concatinate back to back
+     */
     public void concatenateTrajectories(String... trajectoryNames) {
         // Parent trajectory that trajectories will be added to
         Trajectory parentTrajectory = null;

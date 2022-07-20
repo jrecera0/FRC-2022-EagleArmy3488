@@ -9,12 +9,22 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Pickup;
 import frc.robot.subsystems.Shooter;
 
+/**
+ * AutoShootCmd class that allows for us to automatically index and shoot the ball
+ * when the shooting trigger is pressed. This removes the need to manually index the ball
+ * towards the shooter while waiting for it to spin up to speed.
+ */
 public class AutoShootCmd extends CommandBase {
   private final Indexer indexer;
   private final Shooter shooter;
   private final Pickup pickup;
   
-  /** Creates a new AutoShoot. */
+  /**
+   * Creates a new AutoShootCmd.
+   * @param indexer Indexer that will roll the power cells to the shooter
+   * @param shooter Shooter that will shoot the power cells towards the hub
+   * @param pickup Pickup that will also rotate in case any power cells are stuck towards the front
+   */
   public AutoShootCmd(Indexer indexer, Shooter shooter, Pickup pickup) {
     this.shooter = shooter;
     this.indexer = indexer;
@@ -30,6 +40,12 @@ public class AutoShootCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * When scheduled, the shooter will always be spinning, and while this is happening,
+   * the robot will check if we have reached the threshold speed to start moving power cells
+   * towards the shooter to shoot them out. If so, we run the indexer and the pickup, otherwise
+   * they will be in a stopped state until the "ready" threshold state is reached.
+   */
   @Override
   public void execute() {
     shooter.shoot();
@@ -46,6 +62,9 @@ public class AutoShootCmd extends CommandBase {
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Immediately stop all subsystems once unscheduled or interrupted
+   */
   @Override
   public void end(boolean interrupted) {
     shooter.stop();

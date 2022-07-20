@@ -7,10 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Pivot;
 
+/**
+ * DropPivotCmd class that drops the {@link frc.robot.subsystems.Pickup} mechanism towards the front of the robot
+ */
 public class DropPivotCmd extends CommandBase {
   private final Pivot pivot;
 
-  /** Creates a new DropPivot. */
+  /**
+   * Creates a new DropPivotCmd. 
+   * @param pivot Pivot being used to lower the pickup
+   */
   public DropPivotCmd(Pivot pivot) {
     this.pivot = pivot;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,12 +30,18 @@ public class DropPivotCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Simply executes the {@code drop()} function found in {@link Pivot}
+   */
   @Override
   public void execute() {
     pivot.drop();
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Immediately stops the pivot once unscheduled or interrupted
+   */
   @Override
   public void end(boolean interrupted) {
     pivot.stop();

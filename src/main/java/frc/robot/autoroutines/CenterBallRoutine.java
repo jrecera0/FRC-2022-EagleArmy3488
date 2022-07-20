@@ -25,7 +25,17 @@ import frc.robot.subsystems.Pickup;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 
-/** Add your docs here. */
+/**
+ * This class is where we set up and create all of the {@code CenterBallRoutine}. In theory,
+ * you could very well just create the {@link SequentialCommandGroup} within the
+ * {@link frc.robot.RobotContainer} class but for better understanding and organizational purposes,
+ * I made the autoroutines as separate classes instead. The idea here is that you can
+ * just look at the autoroutine as a whole and understand what it does by looking at a single class,
+ * and modify it to your needs if the requirements change, without having to go digging in
+ * {@link frc.robot.RobotContainer} where a number of other things are already happening.
+ * 
+ * TODO: Add diagram!
+ */
 public class CenterBallRoutine {
     private Trajectory backupTrajectory;
     private Trajectory pickupTrajectory;
@@ -35,8 +45,18 @@ public class CenterBallRoutine {
     private Pickup pickup;
     private Pivot pivot;
 
+    /**
+     * Use this to set up the {@code CenterBallRoutine} with all required subsystems and the
+     * {@link TrajectoryLoader} to load the correct sequence of trajectories as specified in
+     * the {@link frc.robot.Constants} class.
+     * @param trajectoryLoader Trajectory loader to grab the trajectories
+     * @param driveTrain {@code DriveTrain} to be used for driving the trajectories
+     * @param shooter {@code Shooter} to be used for shooting power cells
+     * @param indexer {@code Indexer} to be used to queue power cells towards the {@code Shooter}
+     * @param pickup {@code Pickup} to be used to pick up power cells from the field
+     * @param pivot {@code Pivot} to be used to raise and lower the pickup throughout the routine
+     */
     public CenterBallRoutine(TrajectoryLoader trajectoryLoader, DriveTrain driveTrain, Shooter shooter, Indexer indexer, Pickup pickup, Pivot pivot) {
-        // Common backup
         backupTrajectory = trajectoryLoader.getTrajectory(TrajectoryPathnames.kBackupTraj);
         pickupTrajectory = trajectoryLoader.getTrajectory(TrajectoryPathnames.kCenterBallTraj);
         this.driveTrain = driveTrain;
@@ -46,7 +66,12 @@ public class CenterBallRoutine {
         this.pickup = pickup;
     }
 
-    // something screwy is here because I can't make this a sequential command group...
+    /**
+     * Returns the assembled {@link SequentialCommandGroup} with the entire autonomous routine.
+     * This is what you realistically want to be editing when you're making changes to the routine
+     * as a whole, outside of changing trajectories.
+     * @return {@code CenterBallRoutine} {@link Command} 
+     */
     public Command getCommand() {
         return new SequentialCommandGroup(
             new AutoShootCmd(indexer, shooter, pickup).withTimeout(1.5),

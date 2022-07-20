@@ -7,9 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
+/**
+ * RunRightClimberCmd that was supposed to run the right climber independently
+ * from the left one, but all the code is commented out so it does nothing.
+ */
 public class RunRightClimberCmd extends CommandBase {
   private final Climber climber;
-  /** Creates a new ExtendLeftClimberCmd. */
+
+  /**
+   * Creates a new ExtendRightClimberCmd.
+   * @param climber Climber to be used to do nothing at all
+   */
   public RunRightClimberCmd(Climber climber) {
     this.climber = climber;
     // Use addRequirements() here to declare subsystem dependencies.

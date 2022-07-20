@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    System.out.println(System.getProperty("java.class.path"));
   }
 
   /**
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {}
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /** This function runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     if (m_teleopCommand != null) {
@@ -73,6 +74,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
 
+  /** This function runs the teleop command selected by your {@link RobotContainer} class.*/
   @Override
   public void teleopInit() {
     // This makes sure that the autonomous stops running when

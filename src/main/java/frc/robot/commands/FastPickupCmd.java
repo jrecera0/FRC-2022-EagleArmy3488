@@ -8,10 +8,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.PickupConstants;
 import frc.robot.subsystems.Pickup;
 
+/**
+ * FastPickupCmd class that runs the pickup at full speed to pick up
+ * power cells from the field.
+ */
 public class FastPickupCmd extends CommandBase {
   private final Pickup pickup;
 
-  /** Creates a new PickupCmd. */
+  /**
+   * Creates a new FastPickupCmd.
+   * @param pickup Pickup that is being used to rotate and pick up balls
+   */
   public FastPickupCmd(Pickup pickup) {
     this.pickup = pickup;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -19,6 +26,11 @@ public class FastPickupCmd extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * Initially overrides the speed of the pickup mechanism to 1.0 instead of what is set in
+   * the {@link frc.robot.Constants} class.
+   */
   @Override
   public void initialize() {
     pickup.setSpeed(1.0);
@@ -26,12 +38,19 @@ public class FastPickupCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * While scheduled, run the pickup mechanism via the {@code pickup()} method
+   */
   @Override
   public void execute() {
     pickup.pickup();
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Resets the speed to whatever value it is set to within the {@link frc.robot.Constants} class
+   * before then immediately stopping the pickup.
+   */
   @Override
   public void end(boolean interrupted) {
     pickup.setSpeed(PickupConstants.kPickupSpeed);

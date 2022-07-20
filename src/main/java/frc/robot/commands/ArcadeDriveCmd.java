@@ -9,11 +9,19 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
+/**
+ * ArcadeDriveCmd class that allows for the robot to drive in arcade drive
+ */
 public class ArcadeDriveCmd extends CommandBase {
   private final DriveTrain driveTrain;
   private final Supplier<Double> speedFunc, rotationFunc; // I'm new to suppliers
 
-  /** Creates a new ArcadeDriveCmd. */
+  /**
+   * Creates a new ArcadeDriveCmd.
+   * @param driveTrain Drivetrain that is being driven
+   * @param speedFunc Function that returns a double in order to specify the fwd-speed of the robot
+   * @param rotationFunc Function that returns a double in order to specify the rot speed of the robot
+   */
   public ArcadeDriveCmd(DriveTrain driveTrain, Supplier<Double> speedFunc, Supplier<Double> rotationFunc) {
     this.speedFunc = speedFunc;
     this.rotationFunc = rotationFunc;
@@ -29,6 +37,10 @@ public class ArcadeDriveCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Using the values from the double suppliers, we store these into a variable and pass them into the
+   * {@code arcadeDrive()} method of {@link DriveTrain}.
+   */
   @Override
   public void execute() {
     double fwd = speedFunc.get();

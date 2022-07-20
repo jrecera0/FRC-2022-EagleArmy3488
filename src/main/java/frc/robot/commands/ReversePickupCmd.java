@@ -7,10 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Pickup;
 
+/**
+ * ReversePickupCmd class that spins the pickup in the opposite direction in the case of
+ * needing to eject a ball
+ */
 public class ReversePickupCmd extends CommandBase {
   private final Pickup pickup;
 
-  /** Creates a new ReverseIntakeCmd. */
+  /**
+   * Creates a new ReversePickupCmd.
+   * @param pickup Pickup that will be being used to rotate backwards
+   */
   public ReversePickupCmd(Pickup pickup) {
     this.pickup = pickup;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,12 +31,18 @@ public class ReversePickupCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Simply executes the {@code reverse()} function found in {@link Pickup}
+   */
   @Override
   public void execute() {
     pickup.reverse();
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Immediately stops the pickup once unscheduled or interrupted
+   */
   @Override
   public void end(boolean interrupted) {
     pickup.stop();

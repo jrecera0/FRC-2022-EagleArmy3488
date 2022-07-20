@@ -9,11 +9,19 @@ import frc.robot.Constants.LimelightConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
 
+/**
+ * TargetBallCmd class that targets power cells on the field using the Limelight and
+ * computer vision. See limelight docs for more info on field element targeting
+ */
 public class TargetBallCmd extends CommandBase {
   private final DriveTrain driveTrain;
   private final Limelight limelight;
 
-  /** Creates a new TargetBallCmd. */
+  /**
+   * Creates a new TargetBallCmd.
+   * @param driveTrain Drivetrain to pivot in order to center the robot vision with the power cell
+   * @param limelight Limelight to use for targeting and computer vision
+   */
   public TargetBallCmd(DriveTrain driveTrain, Limelight limelight) {
     this.driveTrain = driveTrain;
     this.limelight = limelight;
@@ -22,6 +30,10 @@ public class TargetBallCmd extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * Sets the limitlight to vision-viewing for processing; this
+   * does obstruct driver view while targetting is occuring
+   */
   @Override
   public void initialize() {
     limelight.setToVisionView();
@@ -29,6 +41,10 @@ public class TargetBallCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Using current values about {@code arcadeDrive()} in {@link DriveTrain}, the robot will
+   * ultimately turn towards the targeted power cell while retaining normal driving functionality
+   */
   @Override
   public void execute() {
     double rot = LimelightConstants.kP * limelight.getTargetXOffset();
@@ -46,6 +62,10 @@ public class TargetBallCmd extends CommandBase {
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Once command ends or is interrupted, the limelight is set back to the original driver
+   * view so that the driver may use it as a normal camera
+   */
   @Override
   public void end(boolean interrupted) {
     limelight.setToDriverView();

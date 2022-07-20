@@ -7,10 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Pivot;
 
+/**
+ * RasiePivotCmd class that raises the {@link frc.robot.subsystems.Pickup} mechanism back within
+ * the frame perimeter of the robot.
+ */
 public class RaisePivotCmd extends CommandBase {
   private final Pivot pivot;
 
-  /** Creates a new RaisePivot. */
+  /**
+   * Creates a new RaisePivotCmd.
+   * @param pivot Pivot being used to raise the pickup
+   */
   public RaisePivotCmd(Pivot pivot) {
     this.pivot = pivot;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,12 +31,18 @@ public class RaisePivotCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Simply executes the {@code raise()} function found in {@link Pivot}
+   */
   @Override
   public void execute() {
     pivot.raise();
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Immediately stops the pivot once unscheduled or interrupted
+   */
   @Override
   public void end(boolean interrupted) {
     pivot.stop();

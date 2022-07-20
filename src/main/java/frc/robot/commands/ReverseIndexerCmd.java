@@ -7,10 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
+/**
+ * ReverseIndexerCmd class that spins the indexer in the opposite direction in the
+ * case of needing to eject a ball
+ */
 public class ReverseIndexerCmd extends CommandBase {
   private final Indexer indexer;
 
-  /** Creates a new ReverseIndxerCmd. */
+  /**
+   * Creates a new ReverseIndxerCmd.
+   * @param indexer Indexer that will be being used to rotate backwards
+   */
   public ReverseIndexerCmd(Indexer indexer) {
     this.indexer = indexer;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,12 +31,18 @@ public class ReverseIndexerCmd extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Simply executes the {@code reverse()} function found in {@link Indexer}
+   */
   @Override
   public void execute() {
     indexer.reverse();
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Immediately stops the pivot once unscheduled or interrupted
+   */
   @Override
   public void end(boolean interrupted) {
     indexer.stop();

@@ -8,10 +8,17 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
+/**
+ * ResetDTPoseCmd class that resets the odometry of the {@link DriveTrain} to aid
+ * in trajectory following
+ */
 public class ResetDTPoseCmd extends CommandBase {
   DriveTrain driveTrain;
 
-  /** Creates a new ReverseDTCmd. */
+  /**
+   * Creates a new ReverseDTCmd.
+   * @param driveTrain Drivetrain to reset the odometry of
+   */
   public ResetDTPoseCmd(DriveTrain driveTrain) {
     this.driveTrain = driveTrain;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -19,6 +26,10 @@ public class ResetDTPoseCmd extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * When scheduled, the odometry of the passed in {@link DriveTrain} will be reset to
+   * a new {@link Pose2d}.
+   */
   @Override
   public void initialize() {
     // driveTrain.invertDriveTrain();
@@ -37,6 +48,10 @@ public class ResetDTPoseCmd extends CommandBase {
   }
 
   // Returns true when the command should end.
+  /**
+   * This is a single action command so it should immediately finish once scheduled, as
+   * we only need to reset odometry once in {@code initialize()}
+   */
   @Override
   public boolean isFinished() {
     return true;

@@ -9,6 +9,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * TurnToAngleCommand class that turns the robot to a given heading for the autonomous period.
+ * This ended up not being used and was a class found online, it definitely has some use for
+ * the future but within this specific project, has no applied usage as we forgoed making an
+ * autonomous routine with rotations and pivoting.
+ */
 public class TurnToAngleCommand extends CommandBase {
   /** Creates a new TurnToAngleCommand. */
   

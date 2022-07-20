@@ -6,6 +6,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * EmptyCommand class that is... actually very useless. If memory serves me right this actually
+ * already exists in WPILib so you don't even need this if you need an empty command to serve as
+ * a delay within your autonomous routines or for whatver other reason.
+ */
 public class EmptyCommand extends CommandBase {
   /** Creates a new EmptyCommand. */
   public EmptyCommand() {

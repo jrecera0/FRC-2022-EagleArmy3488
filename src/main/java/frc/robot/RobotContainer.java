@@ -67,20 +67,24 @@ public class RobotContainer {
   private final Pivot pivot;
   private final Shooter shooter;
 
-  // Controller
   private final XboxController xboxController;
 
-  // Trajectories and auto routines
   private final TrajectoryLoader trajectoryLoader;
   private final JsonTrajRoutine jsonTrajRoutine;
   private final CenterBallRoutine centerBallRoutine;
   private final FarBallRoutine farBallRoutine;
 
-  // Setup choosers for autonomous and limelight
+  /**
+   * {@link SendableChooser} so we have the ability to pick an autonomous routine from our dashboard
+   */
   private final SendableChooser<Command> autoRoutineChooser;
   // private final SendableChooser<Number> pipelineChooser;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands. You essentiall assemble all the parts
+   * of the robot in code here, from putting the subsystems all into one place, to binding all your buttons to running
+   * specific commands.
+  */
   public RobotContainer() {
     // Subsystems
     climber = new Climber();
@@ -122,7 +126,7 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button to command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
@@ -195,6 +199,11 @@ public class RobotContainer {
     return autoRoutineChooser.getSelected();
   }
 
+  /**
+   * Use this to pass the teleop command to the main {@link Robot} class.
+   *
+   * @return the command to run in teleop
+   */
   public Command getTeleopCommand() {
     return new SubsystemSpeedSetter(indexer, pickup, shooter, climber, xboxController);
   }
